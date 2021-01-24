@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  centos-7:
+    build:
+      context: .
+      dockerfile: Dockerfile.el7
+    volumes:
+      - ./artifacts/7:/home/worker/rpmbuild/RPMS
+
+  centos-8:
+    build:
+      context: .
+      dockerfile: Dockerfile.el8
+    volumes:
+      - ./artifacts/8:/home/worker/rpmbuild/RPMS

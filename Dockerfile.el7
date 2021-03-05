@@ -1,13 +1,9 @@
 FROM centos:centos7
-# FROM centos:centos8
 
 LABEL maintainer="G. Dees <garrettdees@gmail.com>"
 
 RUN yum -y install rpmdevtools rpm-build redhat-rpm-config make gcc rpmlint mock gettext wget
 RUN useradd worker -u 1000 -G users,mock -p rpmbuild
-
-# RUN yum -y install rpmdevtools rpm-build redhat-rpm-config make gcc gettext wget
-# RUN useradd worker -u 1000 -G users -p rpmbuild
 
 USER worker
 WORKDIR /home/worker
@@ -18,6 +14,8 @@ RUN echo "%_topdir /home/worker/rpmbuild" > /home/worker/.rpmmacros
 RUN wget -O /home/worker/rpmbuild/SOURCES/hello-2.10.tar.gz \
         http://ftp.gnu.org/gnu/hello/hello-2.10.tar.gz
 
-COPY --chown=worker:users ./hello.spec /home/worker/rpmbuild/SPECS
+COPY --chown=worker:users hello.spec /home/worker/rpmbuild/SPECS
+
+RUN sed -i 's/\r//' /home/worker/rpmbuild/SPECS/hello.spec
 
 CMD [ "rpmbuild", "-ba", "/home/worker/rpmbuild/SPECS/hello.spec" ]

@@ -38,7 +38,7 @@ docker run -d --name=rpmbuild-el8 -v ./artifacts/8:/home/worker/rpmbuild/RPMS s3
 ## Parameters
 
 | Parameter | Function |
-| :---: | :---: |
+| --- | --- |
 | `-v /home/worker/rpmbuild/RPMS` | Output directory. |
 
 ## Building locally
